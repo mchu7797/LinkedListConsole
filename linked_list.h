@@ -7,43 +7,51 @@
 
 #include "node.h"
 
-class LinkedList {
-  Node* head;
-  Node* tail;
-  Node* current;
-  int count;
+namespace linked_list_console {
 
+class LinkedList {
  public:
   LinkedList();
+
+  Node* NewNode(int key);
+  Node* Read(int index);
+  void Traversal();
+
+  Node* AppendFromHead(Node* new_node);
+  Node* AppendFromTail(Node* new_node);
+
+  Node* InsertBefore(Node* new_node, int index);
+  Node* InsertAfter(Node* new_node, int index);
+
+  Node* DeleteFromHead();
+  Node* DeleteFromTail();
+  Node* Delete(Node* node_to_delete);
+  void DeleteAll();
+
+  Node* Modify(Node* node_to_modify, int key);
+
+  Node* LinearSearchByUnique(int key);
+  void LinearSearchByDuplicate(int key, int* size, Node** results[]);
+  Node* BinarySearchByUnique(int key);
+  void BinarySearchByDuplicate(int key, int* size, Node** results[]);
+
+  void SortByBubble();
+  void SortByInsertion();
+  void SortBySelection();
+
+  bool CheckListSorted();
+
+  int GetCount() { return count_; }
+
   ~LinkedList();
 
-  Node* newNode(int key);
-  Node* read(int index);
-  void traversal();
-
-  Node* appendFromHead(Node* newNode);
-  Node* appendFromTail(Node* newNode);
-
-  Node* insertBefore(Node* newNode, int index);
-  Node* insertAfter(Node* newNode, int index);
-
-  Node* deleteFromHead();
-  Node* deleteFromTail();
-  Node* deleteNode(Node* nodeToDelete);
-  void deleteAll();
-
-  Node* modify(Node* nodeToModify, int key);
-
-  Node* linearSearchByUnique(int key);
-  void linearSearchByDuplicate(int key, int* size, Node** results[]);
-  Node* binarySearchByUnique(int key);
-  void binarySearchByDuplicate(int key, int* size, Node** results[]);
-
-  void sortByBubble();
-  void sortByInsertion();
-  void sortBySelection();
-
-  bool checkListSorted();
+ private:
+  Node* head_;
+  Node* tail_;
+  Node* current_;
+  int count_;
 };
 
-#endif //LINKEDLISTCONSOLE_LINKED_LIST_H
+} // namespace linked_list_console
+
+#endif  // LINKEDLISTCONSOLE_LINKED_LIST_H

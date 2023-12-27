@@ -5,7 +5,7 @@
 #ifndef LINKEDLISTCONSOLE_NODE_H
 #define LINKEDLISTCONSOLE_NODE_H
 
-class Node {
+struct Node {
  public:
   Node* previous;
   Node* next;

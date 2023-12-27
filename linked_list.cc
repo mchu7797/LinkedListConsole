@@ -6,356 +6,362 @@
 
 #include <iostream>
 
+#include "node.h"
+
+namespace linked_list_console {
+
 LinkedList::LinkedList() {
-  this->head = nullptr;
-  this->tail = nullptr;
-  this->current = nullptr;
-  this->count = 0;
+  this->head_ = nullptr;
+  this->tail_ = nullptr;
+  this->current_ = nullptr;
+  this->count_ = 0;
 }
 
-LinkedList::~LinkedList() { deleteAll(); }
+LinkedList::~LinkedList() { DeleteAll(); }
 
-Node* LinkedList::newNode(int key) {
-  this->current = new Node();
+Node* LinkedList::NewNode(int key) {
+  this->current_ = new Node();
 
-  this->current->next = nullptr;
-  this->current->previous = nullptr;
-  this->current->key = key;
+  this->current_->next = this->current_;
+  this->current_->previous = this->current_;
+  this->current_->key = key;
 
-  return this->current;
+  return this->current_;
 }
 
-Node* LinkedList::read(int index) {
-  if (index < 0 || index > this->count - 1) {
+Node* LinkedList::Read(int index) {
+  if (index < 0 || index > this->count_ - 1) {
     return nullptr;
   }
 
-  if (this->head == nullptr || this->tail == nullptr) {
+  if (this->head_ == nullptr || this->tail_ == nullptr) {
     return nullptr;
   }
 
-  this->current = this->head;
+  this->current_ = this->head_;
 
   while (index > 0) {
-    this->current = this->current->next;
+    this->current_ = this->current_->next;
     --index;
   }
 
-  return this->current;
+  return this->current_;
 }
 
-void LinkedList::traversal() {
-  this->current = this->head;
+void LinkedList::Traversal() {
+  this->current_ = this->head_;
 
-  for (int i = 0; i < this->count; ++i) {
-    std::cout << this->current->key << " ";
-    this->current = this->current->next;
+  for (int i = 0; i < this->count_; ++i) {
+    std::cout << this->current_->key << " ";
+    this->current_ = this->current_->next;
   }
 
   std::cout << std::endl;
 }
 
-Node* LinkedList::appendFromHead(Node* newNode) {
-  if (this->head == nullptr || this->tail == nullptr) {
-    this->head = newNode;
-    this->tail = newNode;
-    ++this->count;
+Node* LinkedList::AppendFromHead(Node* new_node) {
+  if (this->head_ == nullptr || this->tail_ == nullptr) {
+    this->head_ = new_node;
+    this->tail_ = new_node;
+    ++this->count_;
 
-    return newNode;
+    return new_node;
   }
 
-  newNode->next = this->head;
-  this->head->previous = newNode;
-  this->head = newNode;
-  this->current = newNode;
+  new_node->next = this->head_;
+  this->head_->previous = new_node;
+  this->head_ = new_node;
+  this->current_ = new_node;
 
-  ++this->count;
+  ++this->count_;
 
-  return this->current;
+  return this->current_;
 }
 
-Node* LinkedList::appendFromTail(Node* newNode) {
-  if (this->head == nullptr || this->tail == nullptr) {
-    this->head = newNode;
-    this->tail = newNode;
-    ++this->count;
+Node* LinkedList::AppendFromTail(Node* new_node) {
+  if (this->head_ == nullptr || this->tail_ == nullptr) {
+    this->head_ = new_node;
+    this->tail_ = new_node;
+    ++this->count_;
 
-    return newNode;
+    return new_node;
   }
 
-  newNode->previous = this->tail;
-  this->tail->next = newNode;
-  this->tail = newNode;
-  this->current = newNode;
+  new_node->previous = this->tail_;
+  this->tail_->next = new_node;
+  this->tail_ = new_node;
+  this->current_ = new_node;
 
-  ++this->count;
+  ++this->count_;
 
-  return this->current;
+  return this->current_;
 }
 
-Node* LinkedList::insertBefore(Node* newNode, int index) {
-  if (this->count == 0) {
+Node* LinkedList::InsertBefore(Node* new_node, int index) {
+  if (this->count_ == 0) {
     return nullptr;
   }
 
-  if (index < 0 || index > this->count - 1) {
+  if (index < 0 || index > this->count_ - 1) {
     return nullptr;
   }
 
-  this->current = this->head;
+  this->current_ = this->head_;
 
   while (index > 0) {
-    this->current = this->current->next;
+    this->current_ = this->current_->next;
     --index;
   }
 
-  newNode->next = this->current;
-  newNode->previous = this->current->previous;
+  new_node->next = this->current_;
+  new_node->previous = this->current_->previous;
 
-  this->current->previous->next = newNode;
-  this->current->previous = newNode;
+  this->current_->previous->next = new_node;
+  this->current_->previous = new_node;
 
-  ++this->count;
+  ++this->count_;
 
-  return newNode;
+  return new_node;
 }
 
-Node* LinkedList::insertAfter(Node* newNode, int index) {
-  if (this->count == 0) {
+Node* LinkedList::InsertAfter(Node* new_node, int index) {
+  if (this->count_ == 0) {
     return nullptr;
   }
 
-  if (index < 0 || index > this->count - 1) {
+  if (index < 0 || index > this->count_ - 1) {
     return nullptr;
   }
 
-  this->current = this->head;
+  this->current_ = this->head_;
 
   while (index > 0) {
-    this->current = this->current->next;
+    this->current_ = this->current_->next;
     --index;
   }
 
-  newNode->previous = this->current;
-  newNode->next = this->current->next;
+  new_node->previous = this->current_;
+  new_node->next = this->current_->next;
 
-  this->current->next->previous = newNode;
-  this->current->next = newNode;
+  this->current_->next->previous = new_node;
+  this->current_->next = new_node;
 
-  ++this->count;
+  ++this->count_;
 
-  return this->current;
+  return this->current_;
 }
 
-Node* LinkedList::deleteFromHead() {
-  if (this->count == 0) {
+Node* LinkedList::DeleteFromHead() {
+  if (this->count_ == 0) {
     return nullptr;
   }
 
-  this->current = this->head;
+  this->current_ = this->head_;
 
-  this->head->next->previous = this->head->next;
-  this->head = this->head->next;
+  this->head_->next->previous = this->head_->next;
+  this->head_ = this->head_->next;
 
-  --this->count;
+  --this->count_;
 
-  return this->current;
+  return this->current_;
 }
 
-Node* LinkedList::deleteFromTail() {
-  if (this->count == 0) {
+Node* LinkedList::DeleteFromTail() {
+  if (this->count_ == 0) {
     return nullptr;
   }
 
-  this->current = this->head;
+  this->current_ = this->head_;
 
-  this->tail->previous->next = this->tail->previous;
-  this->tail = this->tail->previous;
+  this->tail_->previous->next = this->tail_->previous;
+  this->tail_ = this->tail_->previous;
 
-  --this->count;
+  --this->count_;
 
-  return this->current;
+  return this->current_;
 }
 
-Node* LinkedList::deleteNode(Node* nodeToDelete) {
-  if (this->count == 0 || nodeToDelete == nullptr) {
+Node* LinkedList::Delete(Node* node_to_delete) {
+  if (this->count_ == 0 || node_to_delete == nullptr) {
     return nullptr;
   }
 
-  this->current = this->head;
+  this->current_ = this->head_;
 
-  while (this->current != nodeToDelete) {
-    this->current = this->current->next;
+  while (this->current_ != node_to_delete) {
+    this->current_ = this->current_->next;
   }
 
-  this->current->next->previous = this->current->previous;
-  this->current->previous->next = this->current->next;
+  this->current_->next->previous = this->current_->previous;
+  this->current_->previous->next = this->current_->next;
 
-  --this->count;
+  --this->count_;
 
-  return nodeToDelete;
+  return node_to_delete;
 }
 
-void LinkedList::deleteAll() {
-  this->current = this->head;
+void LinkedList::DeleteAll() {
+  this->current_ = this->head_;
 
-  while (this->current != this->tail) {
-    this->current = this->current->next;
-    delete this->current->previous;
+  while (this->current_ != this->tail_) {
+    this->current_ = this->current_->next;
+    delete this->current_->previous;
   }
 
-  delete this->current;
+  delete this->current_;
 
-  this->count = 0;
-  this->head = nullptr;
-  this->tail = nullptr;
-  this->current = nullptr;
+  this->count_ = 0;
+  this->head_ = nullptr;
+  this->tail_ = nullptr;
+  this->current_ = nullptr;
 }
 
-Node* LinkedList::modify(Node* nodeToModify, int key) {
-  if (this->count == 0 || nodeToModify == nullptr) {
+Node* LinkedList::Modify(Node* node_to_modify, int key) {
+  if (this->count_ == 0 || node_to_modify == nullptr) {
     return nullptr;
   }
 
-  this->current = this->head;
+  this->current_ = this->head_;
 
-  while (this->current != nodeToModify) {
-    this->current = this->current->next;
+  while (this->current_ != node_to_modify) {
+    this->current_ = this->current_->next;
   }
 
-  this->current->key = key;
+  this->current_->key = key;
 
-  return this->current;
+  return this->current_;
 }
 
-Node* LinkedList::linearSearchByUnique(int key) {
-  if (this->head == nullptr || this->tail == nullptr || this->count == 0) {
-    std::cout << "ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤!";
+Node* LinkedList::LinearSearchByUnique(int key) {
+  if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
+    std::cout << "¸®½ºÆ®°¡ ºñ¾î ÀÖ½À´Ï´Ù!";
     return nullptr;
   }
 
-  this->current = this->head;
+  this->current_ = this->head_;
 
   int i = 0;
 
-  while (this->current != this->tail) {
-    if (this->current->key == key) {
+  while (this->current_ != this->tail_) {
+    if (this->current_->key == key) {
       break;
     }
 
-    this->current = this->current->next;
+    this->current_ = this->current_->next;
     ++i;
   }
 
-  if (this->current->key != key) {
-    std::cout << "ê²°ê³¼ :  ì°¾ì§€ ëª» í•¨!";
+  if (this->current_->key != key) {
+    std::cout << "°á°ú :  Ã£Áö ¸ø ÇÔ!";
     return nullptr;
   }
 
-  std::cout << "ê²°ê³¼ : " << i;
+  std::cout << "°á°ú : " << i;
 
-  return this->current;
+  return this->current_;
 }
 
-void LinkedList::linearSearchByDuplicate(int key, int* size, Node** results[]) {
-  if (this->head == nullptr || this->tail == nullptr || this->count == 0) {
-    std::cout << "ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤!";
+void LinkedList::LinearSearchByDuplicate(int key, int* const size, Node** results[]) {
+  if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
+    std::cout << "¸®½ºÆ®°¡ ºñ¾î ÀÖ½À´Ï´Ù!";
     return;
   }
 
   *size = 0;
-  *results = new Node*[this->count];
-  this->current = this->head;
+  *results = new Node*[this->count_];
+  this->current_ = this->head_;
 
-  std::cout << "ê²°ê³¼ : ";
+  std::cout << "°á°ú : ";
 
-  for (int i = 0; i < this->count; ++i) {
-    if (this->read(i)->key == key) {
-      std::cout << i;
-      (*results)[*size] = this->read(i);
+  for (int i = 0; i < this->count_; ++i) {
+    if (this->Read(i)->key == key) {
+      std::cout << i << " ";
+      (*results)[*size] = this->Read(i);
     }
   }
 
   std::cout << std::endl;
 }
 
-Node* LinkedList::binarySearchByUnique(int key) {
-  if (this->head == nullptr || this->tail == nullptr || this->count == 0) {
-    std::cout << "ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤!";
+Node* LinkedList::BinarySearchByUnique(int key) {
+  if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
+    std::cout << "¸®½ºÆ®°¡ ºñ¾î ÀÖ½À´Ï´Ù!";
     return nullptr;
   }
 
-  if (key < this->head->key || key > this->tail->key) {
-    std::cout << "ê²°ê³¼ : ì°¾ì§€ ëª»í•¨";
+  if (key < this->head_->key || key > this->tail_->key) {
+    std::cout << "°á°ú : Ã£Áö ¸øÇÔ";
     return nullptr;
   }
 
   int left, right, middle;
 
   left = 0;
-  right = this->count;
+  right = this->count_;
 
   while (left <= right) {
     middle = (left + right) / 2;
 
     std::cout << middle << " ";
 
-    if (this->read(middle)->key == key) {
-      std::cout << "ê²°ê³¼ : " << middle << std::endl;
-      return this->read(middle);
+    if (this->Read(middle)->key == key) {
+      std::cout << "°á°ú : " << middle << std::endl;
+      return this->Read(middle);
     }
 
-    if (this->read(middle)->key < key) {
+    if (this->Read(middle)->key < key) {
       left = middle + 1;
     } else {
       right = middle - 1;
     }
   }
+
+  return nullptr;
 }
 
-void LinkedList::binarySearchByDuplicate(int key, int* size, Node** results[]) {
-  if (this->head == nullptr || this->tail == nullptr || this->count == 0) {
-    std::cout << "ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤!";
+void LinkedList::BinarySearchByDuplicate(int key, int* size, Node** results[]) {
+  if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
+    std::cout << "¸®½ºÆ®°¡ ºñ¾î ÀÖ½À´Ï´Ù!";
     *size = -1;
     return;
   }
 
-  if (key < this->head->key || key > this->tail->key) {
-    std::cout << "NONE";
+  if (key < this->head_->key || key > this->tail_->key) {
+    std::cout << "NONE ";
     *size = -1;
     return;
   }
 
-  int left, right, middle, isDuplicated;
+  int left, right, middle, is_duplicated;
 
-  results = new Node**[this->count];
+  *results = new Node*[this->count_];
 
   *size = 0;
   left = 0;
-  right = this->count;
+  right = this->count_;
 
   while (left < right) {
     middle = (left + right) / 2;
 
     std::cout << middle << " ";
 
-    if (this->read(middle)->key == key) {
-      isDuplicated = 0;
+    if (this->Read(middle)->key == key) {
+      is_duplicated = 0;
 
       for (int i = 0; i < *size; ++i) {
-        if ((*results)[i] == this->read(middle)) {
-          isDuplicated = 1;
+        if ((*results)[i] == this->Read(middle)) {
+          is_duplicated = 1;
         }
       }
 
-      if (!isDuplicated) {
-        (*results)[*size] = this->read(middle);
+      if (!is_duplicated) {
+        (*results)[*size] = this->Read(middle);
         ++*size;
         std::cout << middle << " ";
       }
     }
 
-    if (this->read(middle)->key < key) {
+    if (this->Read(middle)->key < key) {
       left = middle + 1;
     } else {
       right = middle - 1;
@@ -364,12 +370,12 @@ void LinkedList::binarySearchByDuplicate(int key, int* size, Node** results[]) {
 
   middle = left;
 
-  std::cout << std::endl << "ê²°ê³¼ : ";
+  std::cout << std::endl << "°á°ú : ";
 
-  while (left < this->count &&
-         this->read(middle)->key == this->read(left)->key) {
+  while (left < this->count_ &&
+         this->Read(middle)->key == this->Read(left)->key) {
     std::cout << left << " ";
-    (*results)[*size] = this->read(left);
+    (*results)[*size] = this->Read(left);
     ++left;
     ++*size;
   }
@@ -377,85 +383,87 @@ void LinkedList::binarySearchByDuplicate(int key, int* size, Node** results[]) {
   std::cout << std::endl;
 }
 
-void LinkedList::sortByBubble() {
-  if (this->head == nullptr || this->tail == nullptr || this->count == 0) {
+void LinkedList::SortByBubble() {
+  if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     return;
   }
 
   int temp;
 
-  for (int i = 0; i < this->count - 1; ++i) {
-    for (int j = 0; j < this->count - 1 - i; ++j) {
-      if (this->read(j)->key >= this->read(j + 1)->key) {
-        temp = this->read(j)->key;
-        this->modify(this->read(j), this->read(j + 1)->key);
-        this->modify(this->read(j + 1), temp);
+  for (int i = 0; i < this->count_ - 1; ++i) {
+    for (int j = 0; j < this->count_ - 1 - i; ++j) {
+      if (this->Read(j)->key >= this->Read(j + 1)->key) {
+        temp = this->Read(j)->key;
+        this->Modify(this->Read(j), this->Read(j + 1)->key);
+        this->Modify(this->Read(j + 1), temp);
       }
     }
   }
 }
 
-void LinkedList::sortByInsertion() {
-  if (this->head == nullptr || this->tail == nullptr || this->count == 0) {
+void LinkedList::SortByInsertion() {
+  if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     return;
   }
 
   int temp;
 
-  for (int i = 0; i < this->count; ++i) {
+  for (int i = 0; i < this->count_; ++i) {
     for (int j = i; j > 0; --j) {
-      if (this->read(j - 1)->key > this->read(j)->key) {
+      if (this->Read(j - 1)->key > this->Read(j)->key) {
         std::cout << j << std::endl;
-        temp = this->read(j - 1)->key;
-        this->modify(this->read(j - 1), this->read(j)->key);
-        this->modify(this->read(j), temp);
+        temp = this->Read(j - 1)->key;
+        this->Modify(this->Read(j - 1), this->Read(j)->key);
+        this->Modify(this->Read(j), temp);
       }
     }
   }
 }
 
-void LinkedList::sortBySelection() {
-  if (this->head == nullptr || this->tail == nullptr || this->count == 0) {
+void LinkedList::SortBySelection() {
+  if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     return;
   }
 
   int lowest, temp;
 
-  for (int i = 0; i < this->count; ++i) {
+  for (int i = 0; i < this->count_; ++i) {
     lowest = i;
 
-    for (int j = i + 1; j < this->count; ++j) {
-      if (this->read(lowest)->key >= this->read(j)->key) {
+    for (int j = i + 1; j < this->count_; ++j) {
+      if (this->Read(lowest)->key >= this->Read(j)->key) {
         lowest = j;
       }
     }
 
     if (lowest != i) {
-      temp = this->read(lowest)->key;
-      this->modify(this->read(lowest), this->read(i)->key);
-      this->modify(this->read(i), temp);
+      temp = this->Read(lowest)->key;
+      this->Modify(this->Read(lowest), this->Read(i)->key);
+      this->Modify(this->Read(i), temp);
     }
   }
 }
 
-bool LinkedList::checkListSorted() {
-  if (this->count == 0 || this->head == nullptr || this->tail == nullptr) {
+bool LinkedList::CheckListSorted() {
+  if (this->count_ == 0 || this->head_ == nullptr || this->tail_ == nullptr) {
     return false;
   }
 
   int current_key;
 
-  this->current = this->head;
-  current_key = this->current->key;
+  this->current_ = this->head_;
+  current_key = this->current_->key;
 
-  for (int i = 0; i < this->count; ++i) {
-    if (current_key > this->current->key) {
+  for (int i = 0; i < this->count_; ++i) {
+    if (current_key > this->current_->key) {
       return false;
     }
 
-    current_key = this->current->key;
-    this->current = this->current->next;
+    current_key = this->current_->key;
+    this->current_ = this->current_->next;
   }
 
   return true;
 }
+
+} // namespace linked_list_console

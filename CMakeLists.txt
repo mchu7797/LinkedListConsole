@@ -4,7 +4,9 @@ project(LinkedListConsole)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(LinkedListConsole
-               main.cpp
-               node.h
-               linked_list.h
-               linked_list.cc)
+        main.cc
+        node.h
+        linked_list.h
+        linked_list.cc
+        linked_list_console.cc
+        linked_list_console.h)
