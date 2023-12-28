@@ -8,18 +8,18 @@
 
 #include "node.h"
 
-namespace linked_list_console {
+namespace linked_list {
 
-LinkedList::LinkedList() {
+SimpleList::SimpleList() {
   this->head_ = nullptr;
   this->tail_ = nullptr;
   this->current_ = nullptr;
   this->count_ = 0;
 }
 
-LinkedList::~LinkedList() { DeleteAll(); }
+SimpleList::~SimpleList() { DeleteAll(); }
 
-Node* LinkedList::NewNode(int key) {
+Node* SimpleList::NewNode(int key) {
   this->current_ = new Node();
 
   this->current_->next = this->current_;
@@ -29,7 +29,7 @@ Node* LinkedList::NewNode(int key) {
   return this->current_;
 }
 
-Node* LinkedList::Read(int index) {
+Node* SimpleList::Read(int index) {
   if (index < 0 || index > this->count_ - 1) {
     return nullptr;
   }
@@ -48,7 +48,7 @@ Node* LinkedList::Read(int index) {
   return this->current_;
 }
 
-void LinkedList::Traversal() {
+void SimpleList::Traversal() {
   this->current_ = this->head_;
 
   for (int i = 0; i < this->count_; ++i) {
@@ -59,7 +59,7 @@ void LinkedList::Traversal() {
   std::cout << std::endl;
 }
 
-Node* LinkedList::AppendFromHead(Node* new_node) {
+Node* SimpleList::AppendFromHead(Node* new_node) {
   if (this->head_ == nullptr || this->tail_ == nullptr) {
     this->head_ = new_node;
     this->tail_ = new_node;
@@ -78,7 +78,7 @@ Node* LinkedList::AppendFromHead(Node* new_node) {
   return this->current_;
 }
 
-Node* LinkedList::AppendFromTail(Node* new_node) {
+Node* SimpleList::AppendFromTail(Node* new_node) {
   if (this->head_ == nullptr || this->tail_ == nullptr) {
     this->head_ = new_node;
     this->tail_ = new_node;
@@ -97,7 +97,7 @@ Node* LinkedList::AppendFromTail(Node* new_node) {
   return this->current_;
 }
 
-Node* LinkedList::InsertBefore(Node* new_node, int index) {
+Node* SimpleList::InsertBefore(Node* new_node, int index) {
   if (this->count_ == 0) {
     return nullptr;
   }
@@ -124,7 +124,7 @@ Node* LinkedList::InsertBefore(Node* new_node, int index) {
   return new_node;
 }
 
-Node* LinkedList::InsertAfter(Node* new_node, int index) {
+Node* SimpleList::InsertAfter(Node* new_node, int index) {
   if (this->count_ == 0) {
     return nullptr;
   }
@@ -151,7 +151,7 @@ Node* LinkedList::InsertAfter(Node* new_node, int index) {
   return this->current_;
 }
 
-Node* LinkedList::DeleteFromHead() {
+Node* SimpleList::DeleteFromHead() {
   if (this->count_ == 0) {
     return nullptr;
   }
@@ -166,7 +166,7 @@ Node* LinkedList::DeleteFromHead() {
   return this->current_;
 }
 
-Node* LinkedList::DeleteFromTail() {
+Node* SimpleList::DeleteFromTail() {
   if (this->count_ == 0) {
     return nullptr;
   }
@@ -181,7 +181,7 @@ Node* LinkedList::DeleteFromTail() {
   return this->current_;
 }
 
-Node* LinkedList::Delete(Node* node_to_delete) {
+Node* SimpleList::Delete(Node* node_to_delete) {
   if (this->count_ == 0 || node_to_delete == nullptr) {
     return nullptr;
   }
@@ -200,7 +200,7 @@ Node* LinkedList::Delete(Node* node_to_delete) {
   return node_to_delete;
 }
 
-void LinkedList::DeleteAll() {
+void SimpleList::DeleteAll() {
   this->current_ = this->head_;
 
   while (this->current_ != this->tail_) {
@@ -216,7 +216,7 @@ void LinkedList::DeleteAll() {
   this->current_ = nullptr;
 }
 
-Node* LinkedList::Modify(Node* node_to_modify, int key) {
+Node* SimpleList::Modify(Node* node_to_modify, int key) {
   if (this->count_ == 0 || node_to_modify == nullptr) {
     return nullptr;
   }
@@ -232,7 +232,7 @@ Node* LinkedList::Modify(Node* node_to_modify, int key) {
   return this->current_;
 }
 
-Node* LinkedList::LinearSearchByUnique(int key) {
+Node* SimpleList::LinearSearchByUnique(int key) {
   if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     std::cout << "리스트가 비어 있습니다!";
     return nullptr;
@@ -261,7 +261,8 @@ Node* LinkedList::LinearSearchByUnique(int key) {
   return this->current_;
 }
 
-void LinkedList::LinearSearchByDuplicate(int key, int* const size, Node** results[]) {
+void SimpleList::LinearSearchByDuplicate(int key, int* const size,
+                                         Node** results[]) {
   if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     std::cout << "리스트가 비어 있습니다!";
     return;
@@ -283,7 +284,7 @@ void LinkedList::LinearSearchByDuplicate(int key, int* const size, Node** result
   std::cout << std::endl;
 }
 
-Node* LinkedList::BinarySearchByUnique(int key) {
+Node* SimpleList::BinarySearchByUnique(int key) {
   if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     std::cout << "리스트가 비어 있습니다!";
     return nullptr;
@@ -319,7 +320,7 @@ Node* LinkedList::BinarySearchByUnique(int key) {
   return nullptr;
 }
 
-void LinkedList::BinarySearchByDuplicate(int key, int* size, Node** results[]) {
+void SimpleList::BinarySearchByDuplicate(int key, int* size, Node** results[]) {
   if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     std::cout << "리스트가 비어 있습니다!";
     *size = -1;
@@ -383,7 +384,7 @@ void LinkedList::BinarySearchByDuplicate(int key, int* size, Node** results[]) {
   std::cout << std::endl;
 }
 
-void LinkedList::SortByBubble() {
+void SimpleList::SortByBubble() {
   if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     return;
   }
@@ -401,7 +402,7 @@ void LinkedList::SortByBubble() {
   }
 }
 
-void LinkedList::SortByInsertion() {
+void SimpleList::SortByInsertion() {
   if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     return;
   }
@@ -420,7 +421,7 @@ void LinkedList::SortByInsertion() {
   }
 }
 
-void LinkedList::SortBySelection() {
+void SimpleList::SortBySelection() {
   if (this->head_ == nullptr || this->tail_ == nullptr || this->count_ == 0) {
     return;
   }
@@ -444,7 +445,7 @@ void LinkedList::SortBySelection() {
   }
 }
 
-bool LinkedList::CheckListSorted() {
+bool SimpleList::CheckListSorted() {
   if (this->count_ == 0 || this->head_ == nullptr || this->tail_ == nullptr) {
     return false;
   }
@@ -466,4 +467,4 @@ bool LinkedList::CheckListSorted() {
   return true;
 }
 
-} // namespace linked_list_console
+}  // namespace linked_list

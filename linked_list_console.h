@@ -17,14 +17,14 @@ class LinkedListConsole {
   void Start();
 
  private:
-  errno_t ReadFromConsole(std::string string_to_print, int length,
+  errno_t ReadFromConsole(std::string const& string_to_print, int length,
                           int* results);
   void ClearConsole();
   void ShowMenu();
   void ShowElements();
   void ShowError();
 
-  linked_list_console::LinkedList* linked_list_;
+  linked_list::SimpleList* linked_list_;
 };
 
 }  // namespace linked_list_console

@@ -4,7 +4,6 @@
 
 #include "linked_list_console.h"
 
-#include <climits>
 #include <iostream>
 
 #ifdef WIN32
@@ -16,18 +15,16 @@
 namespace linked_list_console {
 
 LinkedListConsole::LinkedListConsole() {
-  this->linked_list_ = new LinkedList();
+  this->linked_list_ = new linked_list::SimpleList();
 }
 
-errno_t LinkedListConsole::ReadFromConsole(std::string string_to_print,
+errno_t LinkedListConsole::ReadFromConsole(std::string const& string_to_print,
                                            int length, int* results) {
   if (!string_to_print.empty()) {
     std::cout << string_to_print;
   }
 
-  if (length < 1) {
-    return 1;
-  }
+  std::cin.ignore(std::cin.rdbuf()->in_avail());
 
   std::string input;
 
@@ -40,9 +37,9 @@ errno_t LinkedListConsole::ReadFromConsole(std::string string_to_print,
       }
     }
 
-    results[i] = std::stoi(input);
-
-    if (results[i] == INT_MIN || results[i] == INT_MAX) {
+    try {
+      results[i] = std::stoi(input);
+    } catch (std::out_of_range const& e) {
       return 2;
     }
   }
@@ -135,6 +132,7 @@ void LinkedListConsole::Start() {
 
     if (this->ReadFromConsole("메뉴 입력 : ", 1, &menu_input)) {
       this->ShowError();
+      continue;
     }
 
     int data_input, *data_inputs;

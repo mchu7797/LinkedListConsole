@@ -7,11 +7,11 @@
 
 #include "node.h"
 
-namespace linked_list_console {
+namespace linked_list {
 
-class LinkedList {
+class SimpleList {
  public:
-  LinkedList();
+  SimpleList();
 
   Node* NewNode(int key);
   Node* Read(int index);
@@ -43,7 +43,7 @@ class LinkedList {
 
   int GetCount() { return count_; }
 
-  ~LinkedList();
+  ~SimpleList();
 
  private:
   Node* head_;
@@ -52,6 +52,6 @@ class LinkedList {
   int count_;
 };
 
-} // namespace linked_list_console
+}  // namespace linked_list
 
 #endif  // LINKEDLISTCONSOLE_LINKED_LIST_H
